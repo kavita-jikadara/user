@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "763755850909",
+    "project_id": "swiggyclone-335cb",
+    "storage_bucket": "swiggyclone-335cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763755850909:android:ce72d37383d903749c3874",
+        "android_client_info": {
+          "package_name": "com.example.swiggy_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAHNGNBd86GsNbE2_UHKsclUe9Va1LNW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
