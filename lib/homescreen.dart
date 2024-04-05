@@ -25,22 +25,22 @@ class _homeState extends State<home> {
 
   List<Widget> _buildScreens() {
     return [
-      Delivery(),
       Dining(),
+      Delivery(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.electric_bike),
-        title: ("Delivery"),
+        icon: Icon(Icons.lunch_dining),
+        title: ("Dining"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.lunch_dining),
-        title: ("Dining"),
+        icon: Icon(Icons.electric_bike),
+        title: ("Delivery"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: Colors.grey,
       ),

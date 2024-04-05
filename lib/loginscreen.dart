@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swiggy_clone/DiningScreen.dart';
 import 'package:swiggy_clone/apiService.dart';
+import 'package:swiggy_clone/forgotPassword.dart';
 import 'package:swiggy_clone/homescreen.dart';
 import 'package:swiggy_clone/loginUserData.dart';
 import 'package:swiggy_clone/logotscreen.dart';
@@ -190,8 +192,8 @@ class _loginState extends State<login> with SingleTickerProviderStateMixin {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Enter password";
-                                  } else if (value!.length < 10) {
-                                    return "minimum 10 degit";
+                                  } else if (value!.length < 8) {
+                                    return "minimum 8 degit";
                                   } else {
                                     return null;
                                   }
@@ -200,42 +202,71 @@ class _loginState extends State<login> with SingleTickerProviderStateMixin {
                               const SizedBox(
                                 height: 10,
                               ),
-                              InkWell(
-                                onTap: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    // print("success");
-                                    final formData = FormData.fromMap({
-                                      'user_name': email.text,
-                                      'password': phone.text,
-                                    });
-                                    var res = await apiService.postCall(
-                                        "user_login.php", formData);
-                                    if (res['status'] == true) {
-                                      Provider.of<LoginUserData>(context, listen: false).setUserData(res['data']);
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => home()),
-                                          (route) => false);
+                              Container(
+                                height: 40,
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 30),
+                                width: MediaQuery.of(context).size.width - 30,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      // print("success");
+                                      final formData = FormData.fromMap({
+                                        'user_name': email.text,
+                                        'password': phone.text,
+                                      });
+                                      var res = await apiService.postCall(
+                                          "user_login.php", formData);
+                                      if (res['status'] == true) {
+                                        Provider.of<LoginUserData>(context,
+                                                listen: false)
+                                            .setUserData(res['data']);
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Dining()),
+                                            (route) => false);
+                                      } else {
+                                        final snackBar = SnackBar(
+                                          content: Text(res['message']),
+                                          backgroundColor: Colors
+                                              .red, // Customize the background color
+                                          duration: Duration(
+                                              seconds:
+                                                  3), // Adjust the duration the SnackBar is displayed
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                    } else {
+                                      print("hey");
                                     }
-                                  }
-                                },
-                                child: Container(
-                                  height: 40,
-                                  margin: const EdgeInsets.only(
-                                      left: 10, right: 10, top: 30),
-                                  width: MediaQuery.of(context).size.width - 30,
-                                  child: ElevatedButton(
-                                    onPressed: () async {},
-                                    child: Text('Login'),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.orange[700],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
+                                  },
+                                  child: Text('Login'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange[700],
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ForgotPasswordPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text("Forgot Password ?")),
+                                ],
                               ),
                               const SizedBox(
                                 height: 20,
@@ -279,34 +310,34 @@ class _loginState extends State<login> with SingleTickerProviderStateMixin {
                             ],
                           ),
                         ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Logout(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                transform: Matrix4.translationValues(
-                                    animation.value * width, 0, 0),
-                                margin: const EdgeInsets.all(30),
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.orange[700],
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //             builder: (context) => const Logout(),
+                        //           ),
+                        //         );
+                        //       },
+                        //       child: Container(
+                        //         transform: Matrix4.translationValues(
+                        //             animation.value * width, 0, 0),
+                        //         margin: const EdgeInsets.all(30),
+                        //         padding: const EdgeInsets.all(15),
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(50),
+                        //           color: Colors.orange[700],
+                        //         ),
+                        //         child: const Icon(
+                        //           Icons.arrow_forward_ios,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ],

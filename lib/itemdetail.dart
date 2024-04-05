@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:like_button/like_button.dart';
 import 'package:swiggy_clone/apiService.dart';
+import 'package:swiggy_clone/feedback.dart';
 import 'package:swiggy_clone/info_screen.dart';
 import 'package:swiggy_clone/order_screen.dart';
 // import 'package:dotted_line/dotted_line.dart';
@@ -35,7 +36,9 @@ class _itemdetailState extends State<itemdetail> {
           topRight: Radius.circular(20),
         ),
       ),
-      builder: (ctx) => info_screen(popupItemData: data,),
+      builder: (ctx) => info_screen(
+        popupItemData: data,
+      ),
     );
   }
 
@@ -72,21 +75,21 @@ class _itemdetailState extends State<itemdetail> {
           color: Colors.black,
         ),
         actions: const [
-          Icon(
-            Icons.search,
-            size: 25,
-          ),
-          SizedBox(
-            width: 7,
-          ),
-          Icon(Icons.favorite_outline_rounded, size: 25),
-          SizedBox(
-            width: 5,
-          ),
-          Icon(Icons.more_vert, size: 25),
-          SizedBox(
-            width: 15,
-          )
+          // Icon(
+          //   Icons.search,
+          //   size: 25,
+          // ),
+          // SizedBox(
+          //   width: 7,
+          // ),
+          // Icon(Icons.favorite_outline_rounded, size: 25),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          // Icon(Icons.more_vert, size: 25),
+          // SizedBox(
+          //   width: 15,
+          // )
         ],
       ),
       body: ListView(
@@ -139,10 +142,27 @@ class _itemdetailState extends State<itemdetail> {
                 width: 10,
               ),
               const Text("4k ratings"),
+              const SizedBox(
+                width: 10,
+              ),
             ],
           ),
           const SizedBox(
             height: 10,
+          ),
+          Center(
+            child: InkWell(
+              child: Text("Write Review"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ReviewScreen(rid: widget.itemData['resid']),
+                  ),
+                );
+              },
+            ),
           ),
           Container(
             padding: const EdgeInsets.all(8),
@@ -354,14 +374,14 @@ class _itemdetailState extends State<itemdetail> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: productData[index]['pimage'] == ""
-                                ? Image.asset(
-                                    'assets/images/premium.jpeg',
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.network(
-                                    "${apiService.url}/${productData[index]['pimage']}",
-                                    fit: BoxFit.fill,
-                                  ),
+                                  ? Image.asset(
+                                      'assets/images/premium.jpeg',
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Image.network(
+                                      "${apiService.url}/${productData[index]['pimage']}",
+                                      fit: BoxFit.fill,
+                                    ),
                               // Image.asset(
                               //   'assets/images/premium.jpg',
                               //   fit: BoxFit.fill,
@@ -377,7 +397,8 @@ class _itemdetailState extends State<itemdetail> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => order_screen(orderData: productData[index]),
+                                builder: (context) =>
+                                    order_screen(orderData: productData[index]),
                               ),
                             );
                           },
@@ -418,7 +439,7 @@ class _itemdetailState extends State<itemdetail> {
               ],
             );
           }),
-            
+
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.spaceAround,
           //   children: [

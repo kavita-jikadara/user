@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:swiggy_clone/DiningScreen.dart';
 import 'package:swiggy_clone/apiService.dart';
 import 'package:swiggy_clone/cupounscreen.dart';
@@ -18,7 +19,100 @@ class order_screen extends StatefulWidget {
 }
 
 class _order_screenState extends State<order_screen> {
+  late Razorpay _razorpay;
+
   ApiService apiService = ApiService();
+  int quantity = 1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    print(response.data);
+    var userData =
+        Provider.of<LoginUserData>(context, listen: false).getUserData();
+    final formData = FormData.fromMap({
+      'uid': userData['uid'],
+      'rid': widget.orderData['rid'],
+      'pid': widget.orderData['pid'],
+      'quantity': quantity,
+      'amount': widget.orderData['price'],
+      'discount': 0,
+      'totalamount': double.parse(widget.orderData['price']) * quantity,
+    });
+    var res = await apiService.postCall("add_order.php", formData);
+    if (res['status'] == true) {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => Dining()), (route) => false);
+      final snackBar = SnackBar(
+        content: Text("Order Placed Successfully"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 3),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Payment error callback
+    print('Error: ${response.message}');
+    final snackBar = SnackBar(
+      content: Text(response.message.toString()),
+      backgroundColor: Colors.red,
+      duration: Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // You can handle error logic here, like showing an error message to the user.
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // External wallet callback
+    print('External Wallet: ${response.walletName}');
+    // You can handle external wallet payments here if needed.
+  }
+
+  void _openCheckout(price) {
+    var userData =
+        Provider.of<LoginUserData>(context, listen: false).getUserData();
+    double amount = double.tryParse(price.toString()) ?? 0.0;
+    int paisa = (amount * 100).toInt();
+    var options = {
+      'key': 'rzp_test_LJKvR968HbcX5x',
+      'amount': paisa,
+      'name': 'Food Delivery',
+      'description': 'Order Food',
+      'prefill': {'contact': userData['uphone'], 'email': userData['uemail']},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    if (quantity > 0) {
+      setState(() {
+        quantity--;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +183,7 @@ class _order_screenState extends State<order_screen> {
                                           )
                                         : Image.network(
                                             "${apiService.url}/${widget.orderData['pimage']}",
-                                            height: 15,
+                                            height: 30,
                                           ),
                                     // Image.asset(
                                     //   'assets/images/premium.jpg',
@@ -122,19 +216,42 @@ class _order_screenState extends State<order_screen> {
                                   //           builder: (context) => home5()));
                                   // },
                                   child: Container(
-                                    padding: EdgeInsets.only(
-                                        top: 5, bottom: 5, left: 8, right: 8),
+                                    height: 50,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             color: Color.fromARGB(
                                                 255, 218, 208, 208))),
-                                    child: Text(
-                                      "-   1   +",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.w600),
+                                    child: Row(
+                                      children: <Widget>[
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.remove,
+                                            size: 10,
+                                          ),
+                                          onPressed: decrementQuantity,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          quantity.toString(),
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                        SizedBox(width: 5),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.add,
+                                            size: 10,
+                                          ),
+                                          onPressed: incrementQuantity,
+                                        ),
+                                      ],
                                     ),
+                                    // Text(
+                                    //   "-   1   +",
+                                    //   style: TextStyle(
+                                    //       color: Colors.green,
+                                    //       fontWeight: FontWeight.w600),
+                                    // ),
                                   ),
                                 ),
                                 SizedBox(
@@ -674,7 +791,8 @@ class _order_screenState extends State<order_screen> {
                             child: Text("item Total"),
                           ),
                           Container(
-                            child: Text("₹${widget.orderData['price']}"),
+                            child: Text(
+                                "₹${widget.orderData['price']} X ${quantity}"),
                           ),
                         ],
                       ),
@@ -807,7 +925,8 @@ class _order_screenState extends State<order_screen> {
                             ),
                           ),
                           Container(
-                            child: Text("₹${widget.orderData['price']}"),
+                            child: Text(
+                                "₹${double.parse(widget.orderData['price']) * quantity}"),
                           ),
                         ],
                       ),
@@ -889,26 +1008,14 @@ class _order_screenState extends State<order_screen> {
                                 ),
                               ),
                               onPressed: () async {
-                                var userData = Provider.of<LoginUserData>(context, listen: false).getUserData();
-                                final formData = FormData.fromMap({
-                                      'uid':userData['uid'],
-                                      'rid': widget.orderData['rid'],
-                                      'pid': widget.orderData['pid'],
-                                      'quantity': 1,
-                                      'amount': widget.orderData['price'],
-                                      'discount': 0,
-                                      'totalamount': widget.orderData['price'],
-                                    });
-                                    var res = await apiService.postCall("add_order.php", formData);
-                                    if (res['status'] == true) {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Dining()),
-                                          (route) => false);
-                                    }
+                                _openCheckout(
+                                    double.parse(widget.orderData['price']) *
+                                        quantity);
                               },
-                              child: Text("ORDER NOW", style: TextStyle(color: Colors.white),),
+                              child: Text(
+                                "ORDER NOW",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ],

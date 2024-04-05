@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:swiggy_clone/apiService.dart';
+import 'package:swiggy_clone/categortWise.dart';
 import 'package:swiggy_clone/itemdetail.dart';
 import 'package:swiggy_clone/profilescreen.dart';
 import 'package:swiggy_clone/purevagescreen.dart';
@@ -43,377 +44,380 @@ class _DiningState extends State<Dining> {
               height: 20,
             ),
             GestureDetector(
-            onTap: () {
-              Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => profile(),
-                    ),
-                  );
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 10,left: 340,top: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(50),               
-              ), 
-              child: const Icon(Icons.person,color: Colors.blue,size: 30,
-              ),            
-            ),
-          ),
-            Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(1, 1),
-                    blurRadius: 5,
-                    color: Colors.grey.withOpacity(0.5),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => profile(),
                   ),
-                ],
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  prefixIconColor: Colors.red,
-                  suffixIconColor: Colors.red,
-                  hintText: 'Search Location',
-                  suffixIcon: const Icon(Icons.mic_none),
-                  contentPadding: const EdgeInsets.all(15),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 10, left: 340, top: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.blue,
+                  size: 30,
                 ),
               ),
             ),
+            // Container(
+            //   margin: const EdgeInsets.all(10),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(10),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         offset: const Offset(1, 1),
+            //         blurRadius: 5,
+            //         color: Colors.grey.withOpacity(0.5),
+            //       ),
+            //     ],
+            //   ),
+            //   child: TextFormField(
+            //     decoration: InputDecoration(
+            //       prefixIcon: const Icon(Icons.search),
+            //       prefixIconColor: Colors.red,
+            //       suffixIconColor: Colors.red,
+            //       hintText: 'Search Location',
+            //       suffixIcon: const Icon(Icons.mic_none),
+            //       contentPadding: const EdgeInsets.all(15),
+            //       filled: true,
+            //       fillColor: Colors.white,
+            //       border: OutlineInputBorder(
+            //         borderSide: BorderSide.none,
+            //         borderRadius: BorderRadius.circular(10),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderSide: BorderSide.none,
+            //         borderRadius: BorderRadius.circular(10),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                              child: const Icon(
-                            Icons.tune,
-                            size: 20,
-                          )),
-                          Container(
-                            child: const Text(
-                              'Filters',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            child: const Icon(Icons.arrow_drop_down),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Delights',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Nearest',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Book Table',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Rating 4.0+',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Pure Veg',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Outdoor Seating',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Open Now',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Cafe`S',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Fine Dining',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            child: const Text(
-                              'Rating',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            child: const Icon(Icons.arrow_drop_down),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(1, 1),
-                            spreadRadius: 0.3,
-                            blurRadius: 0.1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            child: const Text(
-                              'Cost',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            child: const Icon(Icons.arrow_drop_down),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: Container(
+            //     margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //       children: [
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: Row(
+            //             children: [
+            //               Container(
+            //                   child: const Icon(
+            //                 Icons.tune,
+            //                 size: 20,
+            //               )),
+            //               Container(
+            //                 child: const Text(
+            //                   'Filters',
+            //                   style: TextStyle(fontWeight: FontWeight.w500),
+            //                 ),
+            //               ),
+            //               Container(
+            //                 child: const Icon(Icons.arrow_drop_down),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Delights',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Nearest',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Book Table',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Rating 4.0+',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Pure Veg',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Outdoor Seating',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Open Now',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Cafe`S',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: const Text(
+            //             'Fine Dining',
+            //             style: TextStyle(fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: Row(
+            //             children: [
+            //               Container(
+            //                 child: const Text(
+            //                   'Rating',
+            //                   style: TextStyle(fontWeight: FontWeight.w500),
+            //                 ),
+            //               ),
+            //               Container(
+            //                 child: const Icon(Icons.arrow_drop_down),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Container(
+            //           height: 35,
+            //           padding: const EdgeInsets.all(7),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             boxShadow: const [
+            //               BoxShadow(
+            //                 offset: Offset(1, 1),
+            //                 spreadRadius: 0.3,
+            //                 blurRadius: 0.1,
+            //                 color: Colors.grey,
+            //               ),
+            //             ],
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: Row(
+            //             children: [
+            //               Container(
+            //                 child: const Text(
+            //                   'Cost',
+            //                   style: TextStyle(fontWeight: FontWeight.w500),
+            //                 ),
+            //               ),
+            //               Container(
+            //                 child: const Icon(Icons.arrow_drop_down),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Expanded(
               child: ListView(
                 children: [
@@ -458,7 +462,8 @@ class _DiningState extends State<Dining> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const pure_veg(),
+                                    builder: (context) =>
+                                        CategoryWise(category: "Pure Veg"),
                                   ),
                                 );
                               },
@@ -476,29 +481,51 @@ class _DiningState extends State<Dining> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 93,
-                              width: 112,
-                              margin: const EdgeInsets.only(
-                                  right: 10), // Spacing between images
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.asset(
-                                  'assets/images/buffet-services.jpg',
-                                  fit: BoxFit.fill,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryWise(category: "Buffert"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 93,
+                                width: 112,
+                                margin: const EdgeInsets.only(
+                                    right: 10), // Spacing between images
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.asset(
+                                    'assets/images/buffet-services.jpg',
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
 
-                            Container(
-                              height: 93,
-                              width: 113,
-                              // Spacing between images
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.asset(
-                                  'assets/images/premium1.jpg',
-                                  fit: BoxFit.fill,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryWise(category: "Premium"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 93,
+                                width: 113,
+                                // Spacing between images
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.asset(
+                                    'assets/images/premium1.jpg',
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
@@ -563,42 +590,75 @@ class _DiningState extends State<Dining> {
                         padding: const EdgeInsets.symmetric(horizontal: 13),
                         child: Row(
                           children: [
-                            Container(
-                              height: 93,
-                              width: 111,
-                              margin: const EdgeInsets.only(
-                                  right: 10), // Spacing between images
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.asset(
-                                  'assets/images/dessert.jpg',
-                                  fit: BoxFit.fill,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryWise(category: "Desserts"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 93,
+                                width: 111,
+                                margin: const EdgeInsets.only(
+                                    right: 10), // Spacing between images
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.asset(
+                                    'assets/images/dessert.jpg',
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 93,
-                              width: 112,
-                              margin: const EdgeInsets.only(
-                                  right: 10), // Spacing between images
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.asset(
-                                  'assets/images/coffee.jpg',
-                                  fit: BoxFit.fill,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryWise(category: "Cafe"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 93,
+                                width: 112,
+                                margin: const EdgeInsets.only(
+                                    right: 10), // Spacing between images
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.asset(
+                                    'assets/images/coffee.jpg',
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
 
-                            Container(
-                              height: 93,
-                              width: 113,
-                              // Spacing between images
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.asset(
-                                  'assets/images/familyd.jpg',
-                                  fit: BoxFit.fill,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoryWise(category: "Family"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 93,
+                                width: 113,
+                                // Spacing between images
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.asset(
+                                    'assets/images/familyd.jpg',
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
@@ -656,142 +716,142 @@ class _DiningState extends State<Dining> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Divider(),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Center(
-                        child: Text(
-                          'MUST-TRIES  IN  SURAT',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 100, 100, 100),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Divider(),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 185,
-                              width: 165,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        height: 185,
-                                        width: 165,
-                                        child: Image.asset(
-                                          'assets/images/gujarati1.jpg',
-                                          fit: BoxFit.fill,
-                                        )),
-                                    const Positioned(
-                                        left: 5,
-                                        bottom: 9,
-                                        child: Text(
-                                          "13 Unmissable \n Gujarati \n Delicacies",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17),
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 13,
-                            ),
-                            Container(
-                              height: 185,
-                              width: 165,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      height: 185,
-                                      width: 165,
-                                      child: Image.asset(
-                                        'assets/images/greate.jpg',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    const Positioned(
-                                        left: 5,
-                                        bottom: 9,
-                                        child: Text(
-                                          "11 Great Cafes",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17),
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      MaterialButton(
-                        onPressed: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(255, 241, 241, 241)),
-                              color: const Color.fromARGB(255, 244, 240, 240)),
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, bottom: 3.5, top: 3.5),
-                          child: const Row(
-                            children: [
-                              Text(
-                                "Explore more",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // const Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Expanded(
+                  //       child: Divider(),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     Center(
+                  //       child: Text(
+                  //         'MUST-TRIES  IN  SURAT',
+                  //         style: TextStyle(
+                  //             color: Color.fromARGB(255, 100, 100, 100),
+                  //             fontWeight: FontWeight.w500,
+                  //             fontSize: 13),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     Expanded(
+                  //       child: Divider(),
+                  //     ),
+                  //   ],
+                  // ),
+                  // // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     SingleChildScrollView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //       child: Row(
+                  //         children: [
+                  //           Container(
+                  //             height: 185,
+                  //             width: 165,
+                  //             child: ClipRRect(
+                  //               borderRadius: BorderRadius.circular(13),
+                  //               child: Stack(
+                  //                 children: [
+                  //                   Container(
+                  //                       height: 185,
+                  //                       width: 165,
+                  //                       child: Image.asset(
+                  //                         'assets/images/gujarati1.jpg',
+                  //                         fit: BoxFit.fill,
+                  //                       )),
+                  //                   const Positioned(
+                  //                       left: 5,
+                  //                       bottom: 9,
+                  //                       child: Text(
+                  //                         "13 Unmissable \n Gujarati \n Delicacies",
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: 17),
+                  //                       ))
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           const SizedBox(
+                  //             width: 13,
+                  //           ),
+                  //           Container(
+                  //             height: 185,
+                  //             width: 165,
+                  //             child: ClipRRect(
+                  //               borderRadius: BorderRadius.circular(13),
+                  //               child: Stack(
+                  //                 children: [
+                  //                   Container(
+                  //                     height: 185,
+                  //                     width: 165,
+                  //                     child: Image.asset(
+                  //                       'assets/images/greate.jpg',
+                  //                       fit: BoxFit.fill,
+                  //                     ),
+                  //                   ),
+                  //                   const Positioned(
+                  //                       left: 5,
+                  //                       bottom: 9,
+                  //                       child: Text(
+                  //                         "11 Great Cafes",
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: 17),
+                  //                       ))
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 7,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     const Spacer(),
+                  //     MaterialButton(
+                  //       onPressed: () {},
+                  //       child: Container(
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //             border: Border.all(
+                  //                 color:
+                  //                     const Color.fromARGB(255, 241, 241, 241)),
+                  //             color: const Color.fromARGB(255, 244, 240, 240)),
+                  //         padding: const EdgeInsets.only(
+                  //             left: 8, right: 8, bottom: 3.5, top: 3.5),
+                  //         child: const Row(
+                  //           children: [
+                  //             Text(
+                  //               "Explore more",
+                  //               style: TextStyle(color: Colors.red),
+                  //             ),
+                  //             Icon(
+                  //               Icons.arrow_forward,
+                  //               color: Colors.red,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const Spacer(),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -823,7 +883,9 @@ class _DiningState extends State<Dining> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => itemdetail(itemData: item,)));
+                                    builder: (context) => itemdetail(
+                                          itemData: item,
+                                        )));
                           },
                           child: Card(
                             // child: Padding(
